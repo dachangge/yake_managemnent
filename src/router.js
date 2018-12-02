@@ -1,23 +1,62 @@
 import Vue from 'vue'
 import Router from 'vue-router'
-import Home from './views/Home.vue'
+
+// 进度条
+import NProgress from 'nprogress'
+import 'nprogress/nprogress.css'
 
 Vue.use(Router)
 
-export default new Router({
-  routes: [
-    {
-      path: '/',
-      name: 'home',
-      component: Home
-    },
-    {
-      path: '/about',
-      name: 'about',
-      // route level code-splitting
-      // this generates a separate chunk (about.[hash].js) for this route
-      // which is lazy-loaded when the route is visited.
-      component: () => import(/* webpackChunkName: "about" */ './views/About.vue')
-    }
-  ]
+let router =  new Router({
+    routes: [
+        {
+            path: '/',
+            component: () =>
+                import ('@/views/auth/login.vue'),
+        },
+        {
+            path: '/login',
+            component: () =>
+                import ('@/views/auth/login.vue'),
+        },
+        {
+            path: '/404',
+            component: () =>
+                import ('@/views/notFind'),
+        },
+        {
+            path: '/main',
+            component: () =>
+                import ('@/views/main'),
+            children: [
+                {
+                    path: 'customerInfo',
+                    component: () => import('@/views/customerInfo')
+                },
+                {
+                    path: 'consultingRelease',
+                    component: () => import('@/views/consultingRelease')
+                }
+            ]
+        }
+        ]
 })
+
+/* 前置钩子 */
+router.beforeEach((to, from, next) => {
+    // 返回顶部
+    window.scrollTo(0, 0);
+    NProgress.start();
+    console.log(to);
+    next();
+    // store.commit('menu/refreshMenuActive',to.path);
+
+});
+
+/* 后置钩子 */
+router.afterEach((to, from) => {
+    NProgress.done();
+});
+
+
+export default router;
