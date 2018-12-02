@@ -1,10 +1,14 @@
 <template>
     <div class="consultingRelease">
         <div class="wsbodyhead">
-            <a href="javascript:;" class="aside_tit">客户信息</a>
+            <a href="javascript:;" class="aside_tit">咨询发布</a>
         </div>
 
         <div class="item-table">
+
+
+
+
             <Editor id="tinymce" v-model="tinymceHtml" :init="editorInit"></Editor>
 
 
@@ -54,10 +58,9 @@ export default {
             let formdata = new FormData()
             formdata.set('file', blobInfo.blob())
             this.$http.post('/server/imgUpload.php', formdata,{mheaders: true,header: {'Content-Type': 'multipart/form-data'}}).then(res => {
-                console.log(res);
-                success(res.data.data.src)
+                success(res.result)
             }).catch(res => {
-                failure('error')
+                failure(res.result)
             })
         }
     },
