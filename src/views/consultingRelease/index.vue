@@ -5,13 +5,56 @@
         </div>
 
         <div class="item-table">
+            <el-form ref="form" :model="item" label-width="80px">
+
+                <el-form-item label="资讯类型">
+                    <el-select v-model="item.art_type" placeholder="请选择类型">
+                        <!--1安装案例 2行业资讯 3 媒体案例-->
+                        <el-option label="安装案例" :value="1"></el-option>
+                        <el-option label="行业资讯" :value="2"></el-option>
+                        <el-option label="媒体案例" :value="3"></el-option>
+                    </el-select>
+                </el-form-item>
+                <el-form-item label="资讯标题">
+                    <el-input v-model="item.art_title"></el-input>
+                </el-form-item>
+                <el-form-item label="资讯描述">
+                    <el-input type="textarea" v-model="item.art_desc"></el-input>
+                </el-form-item>
+
+                <el-form-item label="资讯简图">
+                    <el-upload
+                            :show-file-list="false"
+                            :on-success="uploadSuccess"
+                            class="upload-demo"
+                            action="/server/imgUpload.php"
+                            accept="image/png,image/jpeg,image/jpg"
+
+                            >
+                        <el-button >点击上传</el-button>
+                    </el-upload>
+                </el-form-item>
+
+                <el-form-item label="图片预览">
+                    <img style="max-width: 300px;" :src="item.src" alt="">
+
+                </el-form-item>
+
+            </el-form>
 
 
 
 
+
+            <p class="mt-10 mb-10">资讯主体：</p>
             <Editor id="tinymce" v-model="tinymceHtml" :init="editorInit"></Editor>
 
 
+        </div>
+
+        <div class="footer" >
+            <el-button type="primary" @click="HandleSubmit">提交文章</el-button>
+            <el-button @click="HandleCancel">重置内容</el-button>
         </div>
     </div>
 </template>
@@ -36,6 +79,8 @@ export default {
     },
     data(){
         return {
+            item: {src: ''},
+            src: '',
             editorInit: {
                 language_url: `tinymce/zh_CN.js`,
                 language: 'zh_CN',
@@ -54,10 +99,31 @@ export default {
 
     },
     methods:{
+
+        //提交内容
+        HandleSubmit(){
+            console.log(this.item);
+        },
+
+        //重置内容
+        HandleCancel(){
+
+        },
+
+
+        uploadSuccess(response, file, fileList){
+            console.log(response,file,fileList);
+            if(response.code === 1){
+                this.item.src = 'http://yousouyun.gotoip2.com' + response.result;
+            }
+        },
+
+
         handleImgUpload(blobInfo, success, failure){
             let formdata = new FormData()
             formdata.set('file', blobInfo.blob())
             this.$http.post('/server/imgUpload.php', formdata,{mheaders: true,header: {'Content-Type': 'multipart/form-data'}}).then(res => {
+                console.log(res);
                 success(res.result)
             }).catch(res => {
                 failure(res.result)
@@ -72,4 +138,12 @@ export default {
 
 <style scoped>
 
+    .item-table{
+        padding: 15px 20px;
+    }
+    .footer{
+        text-align: center;
+        padding: 20px 0;
+        background: #fff;
+    }
 </style>
