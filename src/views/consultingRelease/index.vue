@@ -5,9 +5,9 @@
         </div>
 
         <div class="item-table">
-            <el-form ref="form" :model="item" label-width="80px">
+            <el-form ref="form" :rules="rules" :model="item" label-width="80px">
 
-                <el-form-item label="资讯类型">
+                <el-form-item label="资讯类型" prop="art_type">
                     <el-select v-model="item.art_type" placeholder="请选择类型">
                         <!--1安装案例 2行业资讯 3 媒体案例-->
                         <el-option label="安装案例" :value="1"></el-option>
@@ -15,14 +15,14 @@
                         <el-option label="媒体案例" :value="3"></el-option>
                     </el-select>
                 </el-form-item>
-                <el-form-item label="资讯标题">
+                <el-form-item label="资讯标题" prop="art_title">
                     <el-input v-model="item.art_title"></el-input>
                 </el-form-item>
-                <el-form-item label="资讯描述">
+                <el-form-item label="资讯描述" prop="art_desc">
                     <el-input type="textarea" v-model="item.art_desc"></el-input>
                 </el-form-item>
 
-                <el-form-item label="资讯简图">
+                <el-form-item label="资讯简图" prop="art_pic">
                     <el-upload
                             :show-file-list="false"
                             :on-success="uploadSuccess"
@@ -36,7 +36,7 @@
                 </el-form-item>
 
                 <el-form-item label="图片预览">
-                    <img style="max-width: 300px;" :src="item.src" alt="">
+                    <img style="max-width: 300px;" :src="item.art_pic" alt="">
 
                 </el-form-item>
 
@@ -79,7 +79,22 @@ export default {
     },
     data(){
         return {
-            item: {src: ''},
+            item: {art_pic: ''},
+            rules:{
+                art_type : [
+                    {required : true , trigger : 'change' , message : '请选择咨询类型'}
+                ],
+                art_title : [
+                    {required : true , trigger : 'blur' , message : '请输入咨询标题'}
+                ],
+                art_desc: [
+                    {required : true , trigger : 'blur' , message : '请输入咨询描述'}
+                ],
+                art_pic: [
+                    {required : true , trigger : 'blur' , message : '请上传咨询缩略图'}
+                ]
+            },
+
             src: '',
             editorInit: {
                 language_url: `tinymce/zh_CN.js`,
@@ -102,19 +117,30 @@ export default {
 
         //提交内容
         HandleSubmit(){
-            console.log(this.item);
+            console.log(this.tinymceHtml);
+            this.$refs.form.validate(res => {
+                if(res){
+                    //提交表单
+                    if(!this.tinymceHtml){
+                       return this.$message.warning("请输入咨询主体");
+                    }
+                    this.$http.post("/server/saveArtInfo.php",{...this.item, art_html: this.tinymceHtml}).then(res => {
+                        console.log(res);
+                    })
+                }
+            })
         },
 
         //重置内容
         HandleCancel(){
-
+            this.$refs.form.resetFields();
         },
 
 
         uploadSuccess(response, file, fileList){
             console.log(response,file,fileList);
             if(response.code === 1){
-                this.item.src = 'http://yousouyun.gotoip2.com' + response.result;
+                this.item.art_pic = 'http://yousouyun.gotoip2.com' + response.result.substring(5);
             }
         },
 
