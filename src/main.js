@@ -20,6 +20,10 @@ const ElementUI = require('element-ui');
 // 装载 element ui
 Vue.use(ElementUI);
 
+import CustomerButton from './components/customerButton/index'
+
+Vue.use(CustomerButton);
+
 Vue.prototype.$http = axios;
 
 

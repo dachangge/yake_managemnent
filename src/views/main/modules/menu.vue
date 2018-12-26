@@ -36,6 +36,11 @@
                         menuName: '咨询发布',
                         menuId: 3,
                         menuUrl: 'consultingRelease',
+                    },
+                    {
+                        menuName: '咨询列表',
+                        menuId: 4,
+                        menuUrl: 'consultingList'
                     }
 
         ],

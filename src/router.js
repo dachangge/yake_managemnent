@@ -36,6 +36,10 @@ let router =  new Router({
                 {
                     path: 'consultingRelease',
                     component: () => import('@/views/consultingRelease')
+                },
+                {
+                    path: 'consultingList',
+                    component: () => import('@/views/consultingList')
                 }
             ]
         }
