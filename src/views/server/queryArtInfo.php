@@ -8,13 +8,13 @@ function news($pageNum = 1, $pageSize = 10 , $artType , $keyWords)
     mysqli_select_db($coon, "yousouyun");
     mysqli_set_charset($coon, "utf8");
     // limit为约束显示多少条信息，后面有两个参数，第一个为从第几个开始，第二个为长度
-    $rs = "select * from yake_art_info ORDER BY create_time desc limit " . (($pageNum - 1) * $pageSize) . "," . $pageSize;
+    $rs = "select art_id,art_title,art_desc,art_type,create_time,update_time from yake_art_info ORDER BY create_time desc limit " . (($pageNum - 1) * $pageSize) . "," . $pageSize;
     if($artType && $keyWords){
-        $rs = "select * from yake_art_info where art_title like '%".$keyWords."%' and art_type = '$artType' ORDER BY create_time  desc limit " . (($pageNum - 1) * $pageSize) . "," . $pageSize;
+        $rs = "select art_id,art_title,art_desc,art_type,create_time,update_time from yake_art_info where art_title like '%".$keyWords."%' and art_type = '$artType' ORDER BY create_time  desc limit " . (($pageNum - 1) * $pageSize) . "," . $pageSize;
     }else if($artType){
-        $rs = "select * from yake_art_info where art_type = '$artType' ORDER BY create_time  desc limit " . (($pageNum - 1) * $pageSize) . "," . $pageSize;
+        $rs = "select art_id,art_title,art_desc,art_type,create_time,update_time from yake_art_info where art_type = '$artType' ORDER BY create_time  desc limit " . (($pageNum - 1) * $pageSize) . "," . $pageSize;
     }else if($keyWords){
-        $rs = "select * from yake_art_info where art_title like '%".$keyWords."%' ORDER BY create_time  desc limit " . (($pageNum - 1) * $pageSize) . "," . $pageSize;
+        $rs = "select art_id,art_title,art_desc,art_type,create_time,update_time from yake_art_info where art_title like '%".$keyWords."%' ORDER BY create_time  desc limit " . (($pageNum - 1) * $pageSize) . "," . $pageSize;
     }
     $r = mysqli_query($coon, $rs);
     while ($obj = mysqli_fetch_object($r)) {
