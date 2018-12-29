@@ -6,8 +6,9 @@ mysqli_select_db($coon, "yousouyun");
 mysqli_set_charset($coon, "utf8");
 $sql= "select * from yake_art_info where art_id = '$artId'";
 $r = mysqli_query($coon, $sql);
-if($r){
-    $res = array('code' => 1, 'result' => $r);
+$obj = mysqli_fetch_object($r);
+if($obj){
+    $res = array('code' => 1, 'result' => $obj);
     echo json_encode($res,JSON_UNESCAPED_UNICODE);
 }else{
     $res = array('code' => 0, 'description' => "操作失败");
