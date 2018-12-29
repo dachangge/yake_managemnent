@@ -147,7 +147,9 @@ export default {
             this.$refs.form.validate(res => {
                     if(res) {
                         this.$http.post("/server/updateArtByArtId.php",{...this.item, art_html: this.tinymceHtml}).then(res => {
-                            console.log(res);
+                            this.$message.success("操作成功");
+                            this.$parent.$parent.innerVisible = false;
+                            this.$parent.$parent.$parent.doQuery();
                         })
                     }
             })
