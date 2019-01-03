@@ -82,9 +82,8 @@
 
             handleSubmit(){
 
-                this.$http.post("/web/login.htm").then(res => {
-					localStorage.setItem('loginInfo', JSON.stringify(res.result));
-                    this.$router.push('main/customerInfo')
+                this.$http.post("/server/login.php",this.ruleForm).then(res => {
+                    this.$router.push('main/customerInfo');
 				})
 			}
 		},

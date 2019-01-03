@@ -124,7 +124,9 @@ export default {
                     if(!this.tinymceHtml){
                        return this.$message.warning("请输入咨询主体");
                     }
+
                     this.$http.post("/server/saveArtInfo.php",{...this.item, art_html: this.tinymceHtml}).then(res => {
+                        this.$message.success("发布成功");
                         console.log(res);
                     })
                 }
@@ -140,7 +142,7 @@ export default {
         uploadSuccess(response, file, fileList){
             console.log(response,file,fileList);
             if(response.code === 1){
-                this.item.art_pic = 'http://yousouyun.gotoip2.com' + response.result.substring(5);
+                this.item.art_pic = response.result;
             }
         },
 
