@@ -47,14 +47,16 @@
 
 
             <p class="mt-10 mb-10">资讯主体：</p>
-            <Editor id="tinymce" v-model="tinymceHtml" :init="editorInit"></Editor>
+            <Editor  id="tinymce" v-model="tinymceHtml" :init="editorInit"></Editor>
 
 
         </div>
 
         <div class="footer" >
-            <el-button type="primary" @click="HandleSubmit">提交文章</el-button>
-            <el-button @click="HandleCancel">重置内容</el-button>
+            <el-button type="primary" @click="HandleSubmit" v-if="tab === 0">提交文章</el-button>
+            <el-button type="primary" @click="HandleEdit" v-if="tab === 1">修改内容</el-button>
+            <el-button  @click="HandleReturn" v-if="tab === 1">取消</el-button>
+            <el-button @click="HandleCancel" v-if="tab === 0" >重置内容</el-button>
         </div>
     </div>
 </template>
@@ -77,6 +79,7 @@ export default {
     components:{
         Editor
     },
+
     data(){
         return {
             item: {art_pic: ''},
@@ -109,11 +112,21 @@ export default {
                     this.handleImgUpload(blobInfo, success, failure)
                 }
             },
-            tinymceHtml: ''
+            tinymceHtml: '',
+            tab: 0
         }
 
     },
     methods:{
+
+        init(result){
+
+            result.art_type = +result.art_type;
+            this.item = result;
+            this.tab = 1;
+            this.tinymceHtml = this.item.art_html;
+
+        },
 
         //提交内容
         HandleSubmit(){
@@ -131,6 +144,22 @@ export default {
                     })
                 }
             })
+        },
+        HandleEdit(){
+            this.$refs.form.validate(res => {
+                    if(res) {
+                        this.$http.post("/server/updateArtByArtId.php",{...this.item, art_html: this.tinymceHtml}).then(res => {
+                            this.$message.success("操作成功");
+                            this.$parent.$parent.innerVisible = false;
+                            this.$parent.$parent.$parent.doQuery();
+                        })
+                    }
+            })
+        },
+        HandleReturn(){
+            console.log(this.$parent);
+            this.$refs.form.resetFields();
+            this.$parent.$parent.innerVisible = false;
         },
 
         //重置内容

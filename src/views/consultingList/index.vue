@@ -61,12 +61,18 @@
         </div>
 
 
+        <edit ref="edit"></edit>
+
     </div>
 </template>
 
 <script>
+    import edit from './module/edit'
     export default {
         name: 'index',
+        components:{
+            edit
+        },
         data(){
             return {
                 searchItem:{
@@ -104,7 +110,9 @@
             },
 
             handleEdit(row){
-
+                this.$http.post("/server/queryArtInfoByArtId.php",{artId: row.art_id}).then(res => {
+                    this.$refs.edit.show(res.result);
+                })
             },
 
             handleDelete(row,index){

@@ -2,10 +2,9 @@
 	<div class="login-box">
 		<div class="title">
 			<div class="fl">
-				互仲科技 | 资金处置分发平台
+				后台管理平台
 			</div>
 			<div class="fr">
-				<a target="_blank" href="http://www.arbexpress.cn" class="el-button el-button--default">仲财通官网</a>
 			</div>
 		</div>
 		<div class="content">
@@ -52,7 +51,7 @@
 			</div>
 		</div>
 		<div class="m-footer">
-			© 2017-2018 杭州互仲网络科技有限公司 版权所有 浙ICP备17016869号-1
+			<!--© 2017-2018 杭州互仲网络科技有限公司 版权所有 浙ICP备17016869号-1-->
 		</div>
 	</div>
 </template>

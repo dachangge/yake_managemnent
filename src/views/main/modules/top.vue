@@ -3,7 +3,7 @@
     <div class="content">
       <div class="left fl">
         <a class="cursor css15b692d27d1e8e3">
-          资产处置分发平台
+          后台管理平台
           <!-- <span>•</span> -->
         </a>
         <!-- <span class="ml-5">
@@ -43,7 +43,7 @@ export default {
   },
   methods: {
     handleSignOut() {
-      this.$confirm("是否退出-互仲后台管理系统?", "提示", {
+      this.$confirm("是否退出-后台管理平台?", "提示", {
         cancelButtonText: "取消",
         confirmButtonText: "确定",
         center: true

@@ -1,34 +1,36 @@
 <template>
-        <el-dialog
-                class="consiltingEdit"
-                title="提示"
-                :visible.sync="flag"
-                width="30%"
-                center>
-            <span>需要注意的是内容是默认不居中的</span>
-            <span slot="footer" class="dialog-footer">
-                <el-button @click="flag = false">取 消</el-button>
-            <el-button type="primary" @click="handleSubmit">确 定</el-button>
-            </span>
-        </el-dialog>
+
+    <el-dialog
+            title="咨询修改"
+            :visible.sync="innerVisible"
+             width="750px">
+        <consulting  ref="consulting"></consulting>
+    </el-dialog>
 </template>
 
 <script>
+    import consulting from '../../consultingRelease/index'
     export default {
-        name: 'consiltingEdit',
-        data(){
-            return {
-                flag: false
-            }
+        name: 'edit',
+        components: {
+            consulting
         },
-        methods: {
-            show(){
-                this.flag = true;
+        data(){
+          return {
+              innerVisible: false
+          }
+        },
+        methods:{
+            show(result){
+                this.innerVisible = true;
+                this.$nextTick(() => {
+                    this.$refs.consulting.init(result);
+                })
             }
         }
     }
 </script>
 
-<style lang="stylus" scoped>
+<style scoped>
 
 </style>
