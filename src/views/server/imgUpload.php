@@ -15,7 +15,7 @@
   $upload_path = "../images/"; //上传文件的存放路径
   //开始移动文件到相应的文件夹
   if(move_uploaded_file($file['tmp_name'],$upload_path.$file['name'])){
-      $res = array('code' => 1, 'result' => "../../images/" . $file['name']);
+      $res = array('code' => 1, 'result' => "http://yakeair.cn/images/" . $file['name']);
       echo json_encode($res,JSON_UNESCAPED_UNICODE);
   }else{
        $res = array('code' => 0, 'result' => "图片提交失败");

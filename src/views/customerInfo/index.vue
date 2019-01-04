@@ -4,6 +4,10 @@
             <a href="javascript:;" class="aside_tit">客户信息</a>
         </div>
 
+        <div class="item-search" style="overflow: hidden;">
+            <customer-button class="fr" @click="exportFile" type="warning">导出</customer-button>
+        </div>
+
         <div class="item-table">
 
 
@@ -45,6 +49,16 @@
           }
         },
         methods:{
+            exportFile(){
+              const iframe = document.createElement('iframe');
+              iframe.style.display='none';
+              console.log(process.env)
+              iframe.src= 'http://yousouyun.gotoip2.com' + '/server/exportCustomerExcel.php';
+              document.querySelector('body').appendChild(iframe);
+              // document.querySelector('body').removeChild(iframe);
+            },
+
+
           doQuery(){
               this.$http.post("/server/queryCustomerInfo.php",{...this.pager}).then(res => {
                   // this.pager.count = +res.result.count;

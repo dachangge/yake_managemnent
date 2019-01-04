@@ -83,7 +83,7 @@
 
                 this.$http.post("/server/login.php",this.ruleForm).then(res => {
 					// localStorage.setItem('loginInfo', JSON.stringify(res.result));
-                    this.$router.push('/main/customerInfo')
+                    this.$router.push('main/customerInfo');
 				})
 			}
 		},
