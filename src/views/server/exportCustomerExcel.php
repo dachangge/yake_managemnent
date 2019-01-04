@@ -11,12 +11,12 @@
 
 
 
-$title = array('客户电话','客户地址','客户电话','客户公司','联系时间','省','市');
+$title = array('客户电话','客户电话','客户公司','联系时间','省','市');
 $coon = mysqli_connect("sql.v172.vhostgo.com", "yousouyun","cptefzmb");
 mysqli_select_db($coon, "yousouyun");
 mysqli_set_charset($coon, "utf8");
 $array = array();
-$sql = "select customer_name,customer_address,phone,company_name,create_time,province,city from customer_info";
+$sql = "select customer_name,phone,company_name,create_time,province,city from yake_customer_info";
 $r = mysqli_query($coon, $sql);
 while ($obj = mysqli_fetch_object($r)) {
     $array[] = $obj;

@@ -32,7 +32,7 @@
 						</el-input>
 					</el-form-item>
 
-					<el-checkbox class="mt-10" v-model="ruleForm.isAccountNumber">记住账号</el-checkbox>
+					<!--<el-checkbox class="mt-10" v-model="ruleForm.isAccountNumber">记住账号</el-checkbox>-->
 
 					<div class="mt-20">
 						<el-button
@@ -81,9 +81,9 @@
 
             handleSubmit(){
 
-                this.$http.post("/web/login.htm").then(res => {
-					localStorage.setItem('loginInfo', JSON.stringify(res.result));
-                    this.$router.push('main/customerInfo')
+                this.$http.post("/server/login.php",this.ruleForm).then(res => {
+					// localStorage.setItem('loginInfo', JSON.stringify(res.result));
+                    this.$router.push('/main/customerInfo')
 				})
 			}
 		},

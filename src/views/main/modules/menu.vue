@@ -1,5 +1,7 @@
 <template>
   <div class="menu-box">
+    123123
+
     <el-menu
       router
       :default-active="'/main/customerInfo'"
@@ -49,19 +51,10 @@
       }
     },
     mounted() {
-      if(process.env.NODE_ENV !== 'development'){
-        // 从 缓存读取 左侧树
-        this.menuList = JSON.parse(localStorage.getItem('menuInfoList'));
-      }
-      // 获取menu 树 , 高亮选中
-      this.setMuenActive;
 
-      this.$nextTick(() => {
-        if(this.isPushRecord === true){
-          this.timingRecord();
-          this.timer = setInterval(this.timingRecord,1000 * 60 * 10);
-        }
-      });
+      // 获取menu 树 , 高亮选中
+
+
     },
     methods : {
 
