@@ -1,7 +1,5 @@
 <template>
   <div class="menu-box">
-    123123
-
     <el-menu
       router
       :default-active="'/main/customerInfo'"
